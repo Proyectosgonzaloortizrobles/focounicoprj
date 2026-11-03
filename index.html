@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Foco Único: organiza visualmente tus proyectos en un mapa mental.">
+<title>Foco Único — Mapa de proyectos</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">◎</span><span>foco<span class="muted">único</span></span></a>
+    <button id="addCard" class="primary full">＋ Añadir tarjeta</button>
+    <nav>
+      <button class="nav active" data-view="map">⌘ <span>Mapa mental</span></button>
+      <button class="nav" data-view="all">▦ <span>Todas las tarjetas</span></button>
+      <button class="nav" data-view="notes">✎ <span>Notas rápidas</span></button>
+    </nav>
+    <div class="side-section"><span class="eyebrow">VISTAS</span>
+      <button class="filter-link" data-filter="all">Todas <span id="allCount">0</span></button>
+      <button class="filter-link" data-filter="active">En marcha <span id="activeCount">0</span></button>
+      <button class="filter-link" data-filter="waiting">En espera <span id="waitingCount">0</span></button>
+      <button class="filter-link" data-filter="done">Completadas <span id="doneCount">0</span></button>
+    </div>
+    <div class="sidebar-bottom"><span class="dot"></span> Guardado local en este dispositivo</div>
+  </aside>
+  <main>
+    <header><div><p class="eyebrow" id="today"></p><h1 id="pageTitle">Tu cabeza, fuera de tu cabeza.</h1><p class="sub" id="pageSub">Ordena tus ideas en un mapa visual. Arrastra las tarjetas para organizarte.</p></div>
+      <div class="header-actions"><button class="secondary" id="exportData">↧ Exportar</button><button class="icon-btn" id="settings" title="Ajustes">⚙</button></div>
+    </header>
+    <section id="mapView" class="view">
+      <div class="map-toolbar"><div class="map-hint"><span class="hint-dot"></span> Arrastra las tarjetas · Añade ideas relacionadas desde cada tarjeta</div><div class="toolbar-actions"><input id="mapSearch" placeholder="Buscar en el mapa…"><button class="secondary" id="resetLayout">Reordenar</button></div></div>
+      <div class="map-viewport" id="mapViewport">
+        <div class="map-canvas" id="mapCanvas">
+          <svg class="connections" id="connections"></svg>
+          <div class="root-node" id="rootNode"><span class="root-icon">◎</span><strong>MI UNIVERSO</strong><small>Proyectos e ideas</small></div>
+          <div id="mapCards"></div>
+        </div>
+        <div class="canvas-legend"><span><i class="legend purple"></i>Proyecto</span><span><i class="legend blue"></i>Idea</span><span><i class="legend amber"></i>Pendiente</span></div>
+      </div>
+    </section>
+    <section id="allView" class="view hidden">
+      <div class="toolbar"><input id="listSearch" placeholder="Buscar tarjetas…"><select id="listFilter"><option value="all">Todos los estados</option><option value="active">En marcha</option><option value="waiting">En espera</option><option value="done">Completadas</option></select></div>
+      <div id="cardGrid" class="card-grid"></div>
+    </section>
+    <section id="notesView" class="view hidden">
+      <article class="card notes-card"><span class="eyebrow">DESCARGA MENTAL</span><h2>Saca todo de tu cabeza.</h2><p class="muted">Anota ideas, tareas o preocupaciones sin tener que organizarlas ahora. Después puedes convertir cada línea en una tarjeta.</p>
+      <textarea id="brainDump" rows="8" placeholder="Una idea por línea…"></textarea><div class="notes-actions"><button id="saveNotes" class="secondary">Guardar notas</button><button id="convertNotes" class="primary">Convertir líneas en tarjetas</button></div><p class="muted small" id="notesSaved"></p></article>
+    </section>
+    <footer><span>FOCO ÚNICO · VISUALIZA, ORDENA Y AVANZA</span><span><a href="privacy.html">Privacidad</a> · <a href="cookies.html">Cookies</a> · <a href="legal.html">Aviso legal</a></span></footer>
+  </main>
+</div>
+<dialog id="cardDialog"><form method="dialog" id="cardForm">
+  <div class="modal-head"><div><span class="eyebrow">MAPA MENTAL</span><h2 id="dialogTitle">Nueva tarjeta</h2></div><button class="icon-btn" value="cancel" aria-label="Cerrar">×</button></div>
+  <input type="hidden" id="cardId"><label>Título<input id="cardTitle" required maxlength="90" placeholder="Ej. Lanzar mi tienda online"></label>
+  <label>Descripción / siguiente paso<textarea id="cardDescription" rows="3" maxlength="500" placeholder="¿Qué necesitas recordar o hacer?"></textarea></label>
+  <div class="form-row"><label>Tipo<select id="cardType"><option value="project">Proyecto</option><option value="idea">Idea</option><option value="task">Pendiente</option></select></label><label>Estado<select id="cardStatus"><option value="active">En marcha</option><option value="waiting">En espera</option><option value="done">Completada</option></select></label></div>
+  <label>Conectar con<select id="cardParent"><option value="">Mi universo (sin conexión)</option></select></label>
+  <label>Color<select id="cardColor"><option value="purple">Violeta</option><option value="blue">Azul</option><option value="amber">Ámbar</option><option value="green">Verde</option></select></label>
+  <div class="modal-actions"><button class="secondary" value="cancel">Cancelar</button><button id="saveCard" class="primary" value="default">Guardar tarjeta</button></div>
+</form></dialog>
+<dialog id="settingsDialog"><form method="dialog"><div class="modal-head"><h2>Tu espacio</h2><button class="icon-btn" value="cancel">×</button></div><p class="muted small">Tus tarjetas y notas se guardan en este navegador. Puedes exportar una copia de seguridad desde la parte superior.</p><div class="modal-actions"><button class="secondary" id="importData" value="cancel">Importar copia</button><button class="primary" value="default">Cerrar</button></div><input type="file" id="importFile" accept="application/json" hidden></form></dialog>
+<script src="app.js"></script>
+</body></html>
